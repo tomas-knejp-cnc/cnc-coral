@@ -56,6 +56,39 @@
   margin-bottom: var(--spacing-3);
 }
 
+.input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--palette-grey-300);
+  border-radius: var(--round-corners);
+  padding: var(--spacing-1);
+  margin-bottom: var(--spacing-3);
+
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-primary-regular);
+  font-size: var(--font-size-2);
+  line-height: 1.14;
+
+  color: var(--palette-text-500);
+}
+
+.gdpr {
+  margin-bottom: var(--spacing-3);
+}
+
+.gdprLabel {
+  display: flex;
+  gap: var(--spacing-1);
+  align-items: flex-start;
+
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-primary-regular);
+  font-size: var(--font-size-2);
+  line-height: 1.14;
+
+  color: var(--palette-text-500);
+}
+
 .textareaInfo {
   margin-top: -2px;
   text-align: right;

@@ -158,6 +158,10 @@ export const Comments = (ctx: GraphContext) => ({
     commentRevisionID,
     reason,
     additionalDetails,
+    reporterForename,
+    reporterSurname,
+    reporterEmail,
+    gdprConsent,
   }: GQLCreateCommentFlagInput) =>
     createFlag(
       ctx.mongo,
@@ -174,6 +178,10 @@ export const Comments = (ctx: GraphContext) => ({
           ADDITIONAL_DETAILS_MAX_LENGTH,
           additionalDetails
         ),
+        reporterForename,
+        reporterSurname,
+        reporterEmail,
+        gdprConsent,
       },
       ctx.now,
       ctx.req

@@ -61,6 +61,10 @@ const ReportCommentFormContainer: FunctionComponent<Props> = ({
             commentRevisionID: comment.revision!.id,
             reason: input.reason,
             additionalDetails: input.additionalDetails,
+            reporterForename: input.reporterForename,
+            reporterSurname: input.reporterSurname,
+            reporterEmail: input.reporterEmail,
+            gdprConsent: input.gdprConsent,
           });
         }
         setDone(true);

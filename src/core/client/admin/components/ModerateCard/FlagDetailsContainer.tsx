@@ -137,6 +137,10 @@ const enhanced = withFragmentContainer<Props>({
           }
           reason
           additionalDetails
+          reporterForename
+          reporterSurname
+          reporterEmail
+          gdprConsent
         }
       }
       revision {

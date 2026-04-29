@@ -6,12 +6,14 @@ import styles from "./FlagDetailsEntry.css";
 
 interface Props {
   user: React.ReactNode;
+  identity?: React.ReactNode;
   details?: React.ReactNode;
   onClick?: () => void;
 }
 
 const FlagDetailsEntry: FunctionComponent<Props> = ({
   user,
+  identity,
   details,
   onClick,
 }) => {
@@ -23,6 +25,7 @@ const FlagDetailsEntry: FunctionComponent<Props> = ({
         </BaseButton>
       )}
       {!onClick && <span className={styles.user}>{user}</span>}
+      {identity && <div className={styles.identity}>{identity}</div>}
       {details && <span className={styles.details}>{details}</span>}
     </div>
   );

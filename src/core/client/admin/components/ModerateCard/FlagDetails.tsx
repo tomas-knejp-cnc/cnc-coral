@@ -10,6 +10,10 @@ interface Props {
   nodes: ReadonlyArray<{
     flagger: { id: string; username: string | null } | null;
     additionalDetails: string | null;
+    reporterForename?: string | null;
+    reporterSurname?: string | null;
+    reporterEmail?: string | null;
+    gdprConsent?: boolean | null;
   }>;
   onUsernameClick: (id?: string) => void;
 }
@@ -37,6 +41,26 @@ const FlagDetails: FunctionComponent<Props> = ({
             ) : (
               <NotAvailable />
             )
+          }
+          identity={
+            flag.reporterForename ||
+            flag.reporterSurname ||
+            flag.reporterEmail ||
+            typeof flag.gdprConsent === "boolean" ? (
+              <>
+                {(flag.reporterForename || flag.reporterSurname) && (
+                  <span>
+                    {[flag.reporterForename, flag.reporterSurname]
+                      .filter(Boolean)
+                      .join(" ")}
+                  </span>
+                )}
+                {flag.reporterEmail && <span>{flag.reporterEmail}</span>}
+                {typeof flag.gdprConsent === "boolean" && (
+                  <span>GDPR: {flag.gdprConsent ? "yes" : "no"}</span>
+                )}
+              </>
+            ) : undefined
           }
           details={flag.additionalDetails}
         />

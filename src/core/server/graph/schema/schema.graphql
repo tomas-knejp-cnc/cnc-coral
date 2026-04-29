@@ -350,6 +350,29 @@ type Flag {
   additionalDetails: String
 
   """
+  reporterForename is optional identity information provided by the reporter at
+  the time of submitting the report.
+  """
+  reporterForename: String
+
+  """
+  reporterSurname is optional identity information provided by the reporter at
+  the time of submitting the report.
+  """
+  reporterSurname: String
+
+  """
+  reporterEmail is optional identity information provided by the reporter at the
+  time of submitting the report.
+  """
+  reporterEmail: String
+
+  """
+  gdprConsent is the consent checkbox value provided by the reporter.
+  """
+  gdprConsent: Boolean
+
+  """
   reviewed is whether this flag reason and details have been reviewed by a
   moderator.
   """
@@ -5916,6 +5939,26 @@ input CreateCommentFlagInput {
   created or is relevant.
   """
   additionalDetails: String
+
+  """
+  reporterForename is optional identity information provided by the reporter.
+  """
+  reporterForename: String
+
+  """
+  reporterSurname is optional identity information provided by the reporter.
+  """
+  reporterSurname: String
+
+  """
+  reporterEmail is optional identity information provided by the reporter.
+  """
+  reporterEmail: String
+
+  """
+  gdprConsent is the consent checkbox value provided by the reporter.
+  """
+  gdprConsent: Boolean
 
   """
   clientMutationId is required for Relay support.

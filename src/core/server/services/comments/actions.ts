@@ -380,6 +380,10 @@ export type CreateCommentFlag = Pick<
   "commentID" | "commentRevisionID" | "additionalDetails"
 > & {
   reason: GQLCOMMENT_FLAG_REPORTED_REASON;
+  reporterForename?: string | null;
+  reporterSurname?: string | null;
+  reporterEmail?: string | null;
+  gdprConsent?: boolean | null;
 };
 
 export async function createFlag(
@@ -392,6 +396,22 @@ export async function createFlag(
   now = new Date(),
   request?: Request | undefined
 ) {
+  const reporter = {
+    forename: input.reporterForename || undefined,
+    surname: input.reporterSurname || undefined,
+    email: input.reporterEmail || undefined,
+    gdprConsent:
+      typeof input.gdprConsent === "boolean" ? input.gdprConsent : undefined,
+  };
+
+  const reporterMetadata =
+    reporter.forename ||
+    reporter.surname ||
+    reporter.email ||
+    typeof reporter.gdprConsent === "boolean"
+      ? { reporter }
+      : undefined;
+
   const { comment, action } = await addCommentAction(
     mongo,
     redis,
@@ -403,6 +423,7 @@ export async function createFlag(
       commentID: input.commentID,
       commentRevisionID: input.commentRevisionID,
       additionalDetails: input.additionalDetails,
+      metadata: reporterMetadata,
     },
     author,
     now
