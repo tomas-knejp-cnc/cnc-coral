@@ -41,6 +41,7 @@ function hasFlagDetails(c: ModerateCardDetailsContainer_comment) {
         c.revision.actionCounts.flag.reasons.COMMENT_REPORTED_ABUSIVE +
         c.revision.actionCounts.flag.reasons.COMMENT_REPORTED_OTHER +
         c.revision.actionCounts.flag.reasons.COMMENT_REPORTED_BIO +
+        c.revision.actionCounts.flag.reasons.COMMENT_REPORTED_COPYRIGHT +
         c.revision.actionCounts.flag.reasons.COMMENT_REPORTED_SPAM >
         0 || c.revision.metadata.perspective
     : false;
@@ -166,6 +167,7 @@ const enhanced = withFragmentContainer<Props>({
               COMMENT_DETECTED_TOXIC
               COMMENT_DETECTED_SPAM
               COMMENT_REPORTED_BIO
+              COMMENT_REPORTED_COPYRIGHT
             }
           }
           reaction {

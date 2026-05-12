@@ -987,6 +987,7 @@ moderate-marker-offensive = Offensive
 moderate-marker-abusive = Abusive
 moderate-marker-newCommenter = New commenter
 moderate-marker-repeatPost = Repeat comment
+moderate-marker-copyright = Copyright
 moderate-marker-other = Other
 
 moderate-markers-details = Details
@@ -995,6 +996,7 @@ moderate-flagDetails-offensive = Offensive
 moderate-flagDetails-abusive = Abusive
 moderate-flagDetails-spam = Spam
 moderate-flagDetails-bio = Bio
+moderate-flagDetails-copyright = Copyright violation
 moderate-flagDetails-other = Other
 
 moderate-flagDetails-toxicityScore = Toxicity Score
@@ -1237,6 +1239,7 @@ moderate-forReview-detectedSuspectWord = Suspect word
 moderate-forReview-detectedToxic = Toxic language
 moderate-forReview-reportedAbusive = Abusive
 moderate-forReview-reportedBio = User bio
+moderate-forReview-reportedCopyright = Copyright violation
 moderate-forReview-reportedOffensive = Offensive
 moderate-forReview-reportedOther = Other
 moderate-forReview-reportedSpam = Spam

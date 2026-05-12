@@ -1,5 +1,9 @@
 import { MongoContext } from "coral-server/data/context";
-import { CommentNotFoundError, UserSiteBanned } from "coral-server/errors";
+import {
+  CommentNotFoundError,
+  UserSiteBanned,
+  ValidationError,
+} from "coral-server/errors";
 import { CoralEventPublisherBroker } from "coral-server/events/publisher";
 import logger from "coral-server/logger";
 import {
@@ -25,6 +29,7 @@ import { Tenant } from "coral-server/models/tenant";
 import { User } from "coral-server/models/user";
 import { isSiteBanned } from "coral-server/models/user/helpers";
 import { AugmentedRedis } from "coral-server/services/redis";
+import { validateEmail } from "coral-server/services/users/helpers";
 import {
   publishChanges,
   updateAllCommentCounts,
@@ -32,6 +37,8 @@ import {
 import { Request } from "coral-server/types/express";
 
 import { GQLCOMMENT_FLAG_REPORTED_REASON } from "coral-server/graph/schema/__generated__/types";
+
+const REPORTER_NAME_MAX_LENGTH = 100;
 
 import {
   publishCommentFlagCreated,
@@ -396,6 +403,20 @@ export async function createFlag(
   now = new Date(),
   request?: Request | undefined
 ) {
+  if (
+    input.reporterForename &&
+    input.reporterForename.length > REPORTER_NAME_MAX_LENGTH
+  ) {
+    throw new ValidationError(
+      new Error(
+        `reporterForename length ${input.reporterForename.length} exceeds max ${REPORTER_NAME_MAX_LENGTH}`
+      )
+    );
+  }
+  if (input.reporterEmail) {
+    validateEmail(input.reporterEmail);
+  }
+
   const reporter = {
     forename: input.reporterForename || undefined,
     surname: input.reporterSurname || undefined,

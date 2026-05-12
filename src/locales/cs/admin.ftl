@@ -987,6 +987,7 @@ moderate-marker-offensive = Urážlivý
 moderate-marker-abusive = Hrubý
 moderate-marker-newCommenter = Nový komentátor
 moderate-marker-repeatPost = Opakovaný komentář
+moderate-marker-copyright = Autorská práva
 moderate-marker-other = Jiné
 
 moderate-markers-details = Podrobnosti
@@ -995,6 +996,7 @@ moderate-flagDetails-offensive = Urážlivý
 moderate-flagDetails-abusive = Hrubý
 moderate-flagDetails-spam = Spam
 moderate-flagDetails-bio = Bio
+moderate-flagDetails-copyright = Porušení autorských práv
 moderate-flagDetails-other = Jiné
 
 moderate-flagDetails-toxicityScore = Skóre toxicity
@@ -1237,6 +1239,7 @@ moderate-forReview-detectedSuspectWord = Podezřelé slovo
 moderate-forReview-detectedToxic = Toxický jazyk
 moderate-forReview-reportedAbusive = Hrubý
 moderate-forReview-reportedBio = Bio uživatele
+moderate-forReview-reportedCopyright = Porušení autorských práv
 moderate-forReview-reportedOffensive = Urážlivý
 moderate-forReview-reportedOther = Jiné
 moderate-forReview-reportedSpam = Spam

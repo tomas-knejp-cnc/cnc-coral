@@ -112,7 +112,7 @@ it("render popup expanded", async () => {
   const popover = within(testRenderer.root).getByTestID("report-comment-form");
 
   const radioButton = within(popover).getByLabelText(
-    "This comment is offensive"
+    "Personal attacks or vulgarisms"
   );
 
   act(() =>
@@ -135,7 +135,9 @@ it("report comment as offensive", async () => {
 
   const form = within(comment).getByTestID("report-comment-form");
 
-  const radioButton = within(form).getByLabelText("This comment is offensive");
+  const radioButton = within(form).getByLabelText(
+    "Personal attacks or vulgarisms"
+  );
 
   act(() =>
     radioButton.props.onChange({
@@ -147,6 +149,12 @@ it("report comment as offensive", async () => {
     within(form)
       .getByTestID("report-comment-additional-information")
       .props.onChange({ target: { value: "More info" } })
+  );
+
+  act(() =>
+    within(form)
+      .getByTestID("report-comment-gdpr-consent")
+      .props.onChange({ target: { type: "checkbox", checked: true } })
   );
 
   act(() => {
@@ -161,47 +169,6 @@ it("report comment as offensive", async () => {
   expect(within(comment).toJSON()).toMatchSnapshot();
   within(comment).getByTestID("comment-reported-button");
   expect(resolvers.Mutation.createCommentFlag.called).toBe(true);
-});
-
-it("dont agree with comment", async () => {
-  const commentID = stories[0].comments.edges[0].node.id;
-  const { testRenderer, resolvers } = await createTestRenderer();
-  const comment = await waitForElement(() =>
-    within(testRenderer.root).getByTestID(`comment-${commentID}`)
-  );
-  const button = within(comment).getByTestID("comment-report-button");
-  act(() => button.props.onClick());
-
-  const form = within(comment).getByTestID("report-comment-form");
-
-  const radioButton = within(form).getByLabelText("I disagree", {
-    exact: false,
-  });
-
-  act(() =>
-    radioButton.props.onChange({
-      target: { type: "radio", value: radioButton.props.value },
-    })
-  );
-
-  act(() =>
-    within(form)
-      .getByTestID("report-comment-additional-information")
-      .props.onChange({ target: { value: "More info" } })
-  );
-
-  act(() => {
-    within(form).getByType("form").props.onSubmit({});
-  });
-
-  await act(async () => {
-    await waitForElement(() =>
-      within(comment).getByText("Thank you", { exact: false })
-    );
-  });
-
-  within(comment).getByTestID("comment-reported-button");
-  expect(resolvers.Mutation.createCommentDontAgree.called).toBe(true);
 });
 
 it("report comment as offensive and handle server error", async () => {
@@ -227,12 +194,26 @@ it("report comment as offensive and handle server error", async () => {
 
   const form = within(comment).getByTestID("report-comment-form");
 
-  const radioButton = within(form).getByLabelText("This comment is offensive");
+  const radioButton = within(form).getByLabelText(
+    "Personal attacks or vulgarisms"
+  );
 
   act(() =>
     radioButton.props.onChange({
       target: { type: "radio", value: radioButton.props.value },
     })
+  );
+
+  act(() =>
+    within(form)
+      .getByTestID("report-comment-additional-information")
+      .props.onChange({ target: { value: "More info" } })
+  );
+
+  act(() =>
+    within(form)
+      .getByTestID("report-comment-gdpr-consent")
+      .props.onChange({ target: { type: "checkbox", checked: true } })
   );
 
   act(() => {

@@ -664,22 +664,35 @@ profile-account-notifications-button-update = Update
 ## Report Comment Popover
 comments-reportPopover =
   .description = A dialog for reporting comments
-comments-reportPopover-reportThisComment = Report This Comment
-comments-reportPopover-whyAreYouReporting = Why are you reporting this comment?
+comments-reportPopover-reportThisComment = Report Content
+comments-reportPopover-whyAreYouReporting = Reason for reporting *
 
-comments-reportPopover-reasonOffensive = This comment is offensive
-comments-reportPopover-reasonAbusive = This commenter is being abusive
-comments-reportPopover-reasonIDisagree = I disagree with this comment
-comments-reportPopover-reasonSpam = This looks like an ad or marketing
+comments-reportPopover-reasonOffensive = Personal attacks or vulgarisms
+comments-reportPopover-reasonSpam = Advertising or spam
+comments-reportPopover-reasonCopyright = Copyright violation
 comments-reportPopover-reasonOther = Other
+comments-reportPopover-reasonBio = This commenter's bio is offensive or abusive
 
-comments-reportPopover-additionalInformation =
-  Additional information <optional>Optional</optional>
+comments-reportPopover-reporterName = Name
+comments-reportPopover-reporterEmail = E-mail
+comments-reportPopover-reporterEmailHint = Needed to notify you about the decision.
+
+comments-reportPopover-additionalInformation = Report text *
 comments-reportPopover-pleaseLeaveAdditionalInformation =
   Please leave any additional information that may be helpful to our moderators.
 
 comments-reportPopover-maxCharacters = Max. { $maxCharacters } Characters
 comments-reportPopover-restrictToMaxCharacters = Please restrict your report to { $maxCharacters } characters
+comments-reportPopover-restrictReporterFieldToMaxCharacters = Please restrict this field to { $maxCharacters } characters
+comments-reportPopover-invalidEmail = Invalid email
+
+comments-reportPopover-gdprConsent =
+  I have read the <gdprLink>Information about processing personal data</gdprLink> *
+comments-reportPopover-gdprRequired = Required
+
+comments-reportPopover-goodFaithDeclaration =
+  I declare that, to the best of my knowledge and in good faith, the information and allegations contained in this notice are accurate and complete.
+
 comments-reportPopover-cancel = Cancel
 comments-reportPopover-submit = Submit
 

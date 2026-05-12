@@ -20,6 +20,7 @@ interface Reasons<T> {
   abusive: T[];
   spam: T[];
   bio: T[];
+  copyright: T[];
   other: T[];
 }
 
@@ -31,6 +32,7 @@ function reduceReasons<
     abusive: [],
     spam: [],
     bio: [],
+    copyright: [],
     other: [],
   };
 
@@ -47,6 +49,9 @@ function reduceReasons<
         break;
       case GQLCOMMENT_FLAG_REASON.COMMENT_REPORTED_BIO:
         reasons.bio.push(node);
+        break;
+      case GQLCOMMENT_FLAG_REASON.COMMENT_REPORTED_COPYRIGHT:
+        reasons.copyright.push(node);
         break;
       case GQLCOMMENT_FLAG_REASON.COMMENT_REPORTED_OTHER:
         reasons.other.push(node);
@@ -65,7 +70,7 @@ const FlagDetailsContainer: FunctionComponent<Props> = ({
   comment,
   onUsernameClick,
 }) => {
-  const { offensive, abusive, spam, bio, other } = useMemo(
+  const { offensive, abusive, spam, bio, copyright, other } = useMemo(
     () => reduceReasons(comment.flags.nodes),
     [comment.flags.nodes]
   );
@@ -110,6 +115,15 @@ const FlagDetailsContainer: FunctionComponent<Props> = ({
             </Localized>
           }
           nodes={bio}
+          onUsernameClick={onUsernameClick}
+        />
+        <FlagDetails
+          category={
+            <Localized id="moderate-flagDetails-copyright">
+              <span>Copyright violation</span>
+            </Localized>
+          }
+          nodes={copyright}
           onUsernameClick={onUsernameClick}
         />
         <FlagDetails

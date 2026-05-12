@@ -50,7 +50,6 @@ const CreateCommentFlagMutation = createMutation(
               reason: input.reason,
               additionalDetails: input.additionalDetails,
               reporterForename: input.reporterForename,
-              reporterSurname: input.reporterSurname,
               reporterEmail: input.reporterEmail,
               gdprConsent: input.gdprConsent,
               clientMutationId: (clientMutationId++).toString(),

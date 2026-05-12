@@ -667,22 +667,35 @@ profile-account-notifications-button-update = Aktualizovat
 ## Vyskakovací okno nahlášení komentáře
 comments-reportPopover =
   .description = Dialog pro nahlašování komentářů
-comments-reportPopover-reportThisComment = Nahlásit tento komentář
-comments-reportPopover-whyAreYouReporting = Proč nahlašujete tento komentář?
+comments-reportPopover-reportThisComment = Nahlásit obsah
+comments-reportPopover-whyAreYouReporting = Důvod hlášení *
 
-comments-reportPopover-reasonOffensive = Tento komentář je urážlivý
-comments-reportPopover-reasonAbusive = Tento komentátor se chová nevhodně
-comments-reportPopover-reasonIDisagree = Nesouhlasím s tímto komentářem
-comments-reportPopover-reasonSpam = Vypadá to jako reklama nebo marketing
+comments-reportPopover-reasonOffensive = Osobní útoky nebo vulgarismy
+comments-reportPopover-reasonSpam = Reklama nebo spam
+comments-reportPopover-reasonCopyright = Porušení autorských práv
 comments-reportPopover-reasonOther = Jiný důvod
+comments-reportPopover-reasonBio = Životopis tohoto komentátora je urážlivý nebo nevhodný
 
-comments-reportPopover-additionalInformation =
-  Další informace <optional>Volitelné</optional>
+comments-reportPopover-reporterName = Jméno a příjmení
+comments-reportPopover-reporterEmail = E-mail
+comments-reportPopover-reporterEmailHint = Nutný pro vyrozumění o rozhodnutí.
+
+comments-reportPopover-additionalInformation = Text hlášení *
 comments-reportPopover-pleaseLeaveAdditionalInformation =
   Zanechte prosím jakékoliv další informace, které mohou být užitečné pro naše moderátory.
 
 comments-reportPopover-maxCharacters = Max. { $maxCharacters } znaků
 comments-reportPopover-restrictToMaxCharacters = Omezte prosím své nahlášení na { $maxCharacters } znaků
+comments-reportPopover-restrictReporterFieldToMaxCharacters = Omezte prosím toto pole na { $maxCharacters } znaků
+comments-reportPopover-invalidEmail = Neplatný e-mail
+
+comments-reportPopover-gdprConsent =
+  Seznámil/a jsem se s <gdprLink>Informací o zpracování osobních údajů</gdprLink> *
+comments-reportPopover-gdprRequired = Vyžadováno
+
+comments-reportPopover-goodFaithDeclaration =
+  Prohlašuji, že se v dobré víře domnívám, že informace a tvrzení obsažené v oznámení jsou přesné a úplné.
+
 comments-reportPopover-cancel = Zrušit
 comments-reportPopover-submit = Odeslat
 

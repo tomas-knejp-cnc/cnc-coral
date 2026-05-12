@@ -6,9 +6,9 @@ import { Field, FieldProps, Form } from "react-final-form";
 
 import { OnSubmit } from "coral-framework/lib/form";
 import {
-  customMessage,
-  createValidator,
   composeValidators,
+  createValidator,
+  customMessage,
   required,
   validateEmail,
   validateMaxLength,
@@ -57,10 +57,9 @@ export interface FormProps {
   reason:
     | "COMMENT_REPORTED_OFFENSIVE"
     | "COMMENT_REPORTED_SPAM"
-    | "COMMENT_REPORTED_OTHER"
-    | "DISAGREE";
+    | "COMMENT_REPORTED_COPYRIGHT"
+    | "COMMENT_REPORTED_OTHER";
   reporterForename?: string;
-  reporterSurname?: string;
   reporterEmail?: string;
   gdprConsent?: boolean;
   additionalDetails?: string;
@@ -100,46 +99,35 @@ class ReportCommentForm extends React.Component<Props> {
                 </Localized>
                 <ul className={styles.list}>
                   <li>
-                    <Localized id="comments-reportPopover-reasonOffensive">
-                      <RadioField
-                        name="reason"
-                        value="COMMENT_REPORTED_OFFENSIVE"
-                        disabled={submitting}
-                      >
-                        This comment is offensive
-                      </RadioField>
-                    </Localized>
-                  </li>
-                  <li>
-                    <Localized id="comments-reportPopover-reasonAbusive">
-                      <RadioField
-                        name="reason"
-                        value="COMMENT_REPORTED_ABUSIVE"
-                        disabled={submitting}
-                      >
-                        This commenter is being abusive
-                      </RadioField>
-                    </Localized>
-                  </li>
-                  <li>
-                    <Localized id="comments-reportPopover-reasonIDisagree">
-                      <RadioField
-                        name="reason"
-                        value="DISAGREE"
-                        disabled={submitting}
-                      >
-                        I disagree with this comment
-                      </RadioField>
-                    </Localized>
-                  </li>
-                  <li>
                     <Localized id="comments-reportPopover-reasonSpam">
                       <RadioField
                         name="reason"
                         value="COMMENT_REPORTED_SPAM"
                         disabled={submitting}
                       >
-                        This looks like an ad or marketing
+                        Advertising or spam
+                      </RadioField>
+                    </Localized>
+                  </li>
+                  <li>
+                    <Localized id="comments-reportPopover-reasonOffensive">
+                      <RadioField
+                        name="reason"
+                        value="COMMENT_REPORTED_OFFENSIVE"
+                        disabled={submitting}
+                      >
+                        Personal attacks or vulgarisms
+                      </RadioField>
+                    </Localized>
+                  </li>
+                  <li>
+                    <Localized id="comments-reportPopover-reasonCopyright">
+                      <RadioField
+                        name="reason"
+                        value="COMMENT_REPORTED_COPYRIGHT"
+                        disabled={submitting}
+                      >
+                        Copyright violation
                       </RadioField>
                     </Localized>
                   </li>
@@ -170,41 +158,32 @@ class ReportCommentForm extends React.Component<Props> {
                 </ul>
 
                 <Localized id="comments-reportPopover-reporterName">
-                  <div className={styles.heading}>Forename (Optional)</div>
+                  <div className={styles.heading}>Name</div>
                 </Localized>
                 <div>
-                  <Field name="reporterForename">
-                    {({ input }) => (
-                      <input
-                        {...input}
-                        type="text"
-                        className={styles.input}
-                        disabled={submitting}
-                        data-testid="report-comment-reporter-forename"
-                      />
-                    )}
-                  </Field>
-                </div>
-
-                <Localized id="comments-reportPopover-reporterSurname">
-                  <div className={styles.heading}>Surname (Optional)</div>
-                </Localized>
-                <div>
-                  <Field name="reporterSurname">
-                    {({ input }) => (
-                      <input
-                        {...input}
-                        type="text"
-                        className={styles.input}
-                        disabled={submitting}
-                        data-testid="report-comment-reporter-surname"
-                      />
+                  <Field
+                    name="reporterForename"
+                    validate={composeReporterNameValidator()}
+                  >
+                    {({ input, meta }) => (
+                      <>
+                        <input
+                          {...input}
+                          type="text"
+                          className={styles.input}
+                          disabled={submitting}
+                          data-testid="report-comment-reporter-forename"
+                        />
+                        {meta.error && meta.touched && (
+                          <ValidationMessage meta={meta} />
+                        )}
+                      </>
                     )}
                   </Field>
                 </div>
 
                 <Localized id="comments-reportPopover-reporterEmail">
-                  <div className={styles.heading}>Email (Optional)</div>
+                  <div className={styles.heading}>E-mail</div>
                 </Localized>
                 <Localized id="comments-reportPopover-reporterEmailHint">
                   <div className={styles.detail}>
@@ -214,7 +193,7 @@ class ReportCommentForm extends React.Component<Props> {
                 <div>
                   <Field
                     name="reporterEmail"
-                    validate={composeEmailValidator()}
+                    validate={composeReporterEmailValidator()}
                   >
                     {({ input, meta }) => (
                       <>
@@ -299,10 +278,29 @@ class ReportCommentForm extends React.Component<Props> {
                             disabled={submitting}
                             data-testid="report-comment-gdpr-consent"
                           />
-                          <Localized id="comments-reportPopover-gdprConsent">
+                          <Localized
+                            id="comments-reportPopover-gdprConsent"
+                            elems={{
+                              gdprLink: (
+                                // eslint-disable-next-line jsx-a11y/anchor-has-content
+                                <a
+                                  href="https://www.cncenter.cz/zasady-ochrany-osobnich-udaju/informace-o-zpracovani-udaju-komunikace"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                />
+                              ),
+                            }}
+                          >
                             <span>
-                              I have read the information about processing
-                              personal data.
+                              I have read the{" "}
+                              <a
+                                href="https://www.cncenter.cz/zasady-ochrany-osobnich-udaju/informace-o-zpracovani-udaju-komunikace"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                Information about processing personal data
+                              </a>
+                              .
                             </span>
                           </Localized>
                         </label>
@@ -313,6 +311,14 @@ class ReportCommentForm extends React.Component<Props> {
                     )}
                   </Field>
                 </div>
+
+                <Localized id="comments-reportPopover-goodFaithDeclaration">
+                  <p className={styles.goodFaith}>
+                    I declare that, to the best of my knowledge and in good
+                    faith, the information and allegations contained in this
+                    notice are accurate and complete.
+                  </p>
+                </Localized>
 
                 {submitError && (
                   <ValidationMessage>{submitError}</ValidationMessage>
@@ -368,11 +374,36 @@ class ReportCommentForm extends React.Component<Props> {
   }
 }
 
-function composeEmailValidator() {
+const REPORTER_FIELD_MAX_LENGTH = 100;
+
+function composeReporterEmailValidator() {
+  return composeValidators(
+    customMessage(
+      validateEmail,
+      <Localized id="comments-reportPopover-invalidEmail">
+        <span>Invalid email</span>
+      </Localized>
+    ),
+    customMessage(
+      validateMaxLength(REPORTER_FIELD_MAX_LENGTH),
+      <Localized
+        id="comments-reportPopover-restrictReporterFieldToMaxCharacters"
+        vars={{ maxCharacters: REPORTER_FIELD_MAX_LENGTH }}
+      >
+        <span>Please restrict this field to 100 characters</span>
+      </Localized>
+    )
+  );
+}
+
+function composeReporterNameValidator() {
   return customMessage(
-    validateEmail,
-    <Localized id="comments-reportPopover-invalidEmail">
-      <span>Invalid email</span>
+    validateMaxLength(REPORTER_FIELD_MAX_LENGTH),
+    <Localized
+      id="comments-reportPopover-restrictReporterFieldToMaxCharacters"
+      vars={{ maxCharacters: REPORTER_FIELD_MAX_LENGTH }}
+    >
+      <span>Please restrict this field to 100 characters</span>
     </Localized>
   );
 }

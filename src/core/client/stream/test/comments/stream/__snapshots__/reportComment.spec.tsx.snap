@@ -16,88 +16,16 @@ exports[`render popup 1`] = `
       <div
         className="ReportCommentForm-title"
       >
-        Report This Comment
+        Report Content
       </div>
       <div
         className="ReportCommentForm-heading"
       >
-        Why are you reporting this comment?
+        Reason for reporting *
       </div>
       <ul
         className="ReportCommentForm-list"
       >
-        <li>
-          <div
-            className="Box-root Flex-root RadioButton-root Flex-flex Flex-alignCenter"
-          >
-            <input
-              checked={false}
-              className="RadioButton-input"
-              disabled={false}
-              id="reportComment-popover--reason-COMMENT_REPORTED_OFFENSIVE"
-              name="reason"
-              onBlur={[Function]}
-              onChange={[Function]}
-              onFocus={[Function]}
-              type="radio"
-              value="COMMENT_REPORTED_OFFENSIVE"
-            />
-            <label
-              className="RadioButton-label"
-              htmlFor="reportComment-popover--reason-COMMENT_REPORTED_OFFENSIVE"
-            >
-              This comment is offensive
-            </label>
-          </div>
-        </li>
-        <li>
-          <div
-            className="Box-root Flex-root RadioButton-root Flex-flex Flex-alignCenter"
-          >
-            <input
-              checked={false}
-              className="RadioButton-input"
-              disabled={false}
-              id="reportComment-popover--reason-COMMENT_REPORTED_ABUSIVE"
-              name="reason"
-              onBlur={[Function]}
-              onChange={[Function]}
-              onFocus={[Function]}
-              type="radio"
-              value="COMMENT_REPORTED_ABUSIVE"
-            />
-            <label
-              className="RadioButton-label"
-              htmlFor="reportComment-popover--reason-COMMENT_REPORTED_ABUSIVE"
-            >
-              This commenter is being abusive
-            </label>
-          </div>
-        </li>
-        <li>
-          <div
-            className="Box-root Flex-root RadioButton-root Flex-flex Flex-alignCenter"
-          >
-            <input
-              checked={false}
-              className="RadioButton-input"
-              disabled={false}
-              id="reportComment-popover--reason-DISAGREE"
-              name="reason"
-              onBlur={[Function]}
-              onChange={[Function]}
-              onFocus={[Function]}
-              type="radio"
-              value="DISAGREE"
-            />
-            <label
-              className="RadioButton-label"
-              htmlFor="reportComment-popover--reason-DISAGREE"
-            >
-              I disagree with this comment
-            </label>
-          </div>
-        </li>
         <li>
           <div
             className="Box-root Flex-root RadioButton-root Flex-flex Flex-alignCenter"
@@ -118,7 +46,55 @@ exports[`render popup 1`] = `
               className="RadioButton-label"
               htmlFor="reportComment-popover--reason-COMMENT_REPORTED_SPAM"
             >
-              This looks like an ad or marketing
+              Advertising or spam
+            </label>
+          </div>
+        </li>
+        <li>
+          <div
+            className="Box-root Flex-root RadioButton-root Flex-flex Flex-alignCenter"
+          >
+            <input
+              checked={false}
+              className="RadioButton-input"
+              disabled={false}
+              id="reportComment-popover--reason-COMMENT_REPORTED_OFFENSIVE"
+              name="reason"
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              type="radio"
+              value="COMMENT_REPORTED_OFFENSIVE"
+            />
+            <label
+              className="RadioButton-label"
+              htmlFor="reportComment-popover--reason-COMMENT_REPORTED_OFFENSIVE"
+            >
+              Personal attacks or vulgarisms
+            </label>
+          </div>
+        </li>
+        <li>
+          <div
+            className="Box-root Flex-root RadioButton-root Flex-flex Flex-alignCenter"
+          >
+            <input
+              checked={false}
+              className="RadioButton-input"
+              disabled={false}
+              id="reportComment-popover--reason-COMMENT_REPORTED_COPYRIGHT"
+              name="reason"
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              type="radio"
+              value="COMMENT_REPORTED_COPYRIGHT"
+            />
+            <label
+              className="RadioButton-label"
+              htmlFor="reportComment-popover--reason-COMMENT_REPORTED_COPYRIGHT"
+            >
+              Copyright violation
             </label>
           </div>
         </li>
@@ -147,16 +123,52 @@ exports[`render popup 1`] = `
           </div>
         </li>
       </ul>
+      <div
+        className="ReportCommentForm-heading"
+      >
+        Name
+      </div>
+      <div>
+        <input
+          className="ReportCommentForm-input"
+          data-testid="report-comment-reporter-forename"
+          disabled={false}
+          name="reporterForename"
+          onBlur={[Function]}
+          onChange={[Function]}
+          onFocus={[Function]}
+          type="text"
+          value=""
+        />
+      </div>
+      <div
+        className="ReportCommentForm-heading"
+      >
+        E-mail
+      </div>
+      <div
+        className="ReportCommentForm-detail"
+      >
+        Needed to notify you about the decision.
+      </div>
+      <div>
+        <input
+          className="ReportCommentForm-input"
+          data-testid="report-comment-reporter-email"
+          disabled={false}
+          name="reporterEmail"
+          onBlur={[Function]}
+          onChange={[Function]}
+          onFocus={[Function]}
+          type="email"
+          value=""
+        />
+      </div>
       <label
         className="ReportCommentForm-heading"
         htmlFor="comments-reportCommentForm-additionalDetails--comment-0"
       >
-        Additional information 
-        <span
-          className="ReportCommentForm-detail"
-        >
-          Optional
-        </span>
+        Report text *
       </label>
       <div
         className="ReportCommentForm-detail"
@@ -180,13 +192,44 @@ exports[`render popup 1`] = `
           />
           <div
             className="ReportCommentForm-textareaInfo"
-          >
-            <div>
-              Max. 500 Characters
-            </div>
-          </div>
+          />
         </div>
       </div>
+      <div
+        className="ReportCommentForm-gdpr"
+      >
+        <label
+          className="ReportCommentForm-gdprLabel"
+        >
+          <input
+            checked={false}
+            data-testid="report-comment-gdpr-consent"
+            disabled={false}
+            name="gdprConsent"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+            type="checkbox"
+            value=""
+          />
+          <span>
+            I have read the 
+            <a
+              href="https://www.cncenter.cz/zasady-ochrany-osobnich-udaju/informace-o-zpracovani-udaju-komunikace"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Information about processing personal data
+            </a>
+             *
+          </span>
+        </label>
+      </div>
+      <p
+        className="ReportCommentForm-goodFaith"
+      >
+        I declare that, to the best of my knowledge and in good faith, the information and allegations contained in this notice are accurate and complete.
+      </p>
       <div
         className="Box-root Flex-root Flex-flex Flex-justifyFlexEnd Flex-alignCenter"
       >
@@ -239,88 +282,16 @@ exports[`render popup expanded 1`] = `
       <div
         className="ReportCommentForm-title"
       >
-        Report This Comment
+        Report Content
       </div>
       <div
         className="ReportCommentForm-heading"
       >
-        Why are you reporting this comment?
+        Reason for reporting *
       </div>
       <ul
         className="ReportCommentForm-list"
       >
-        <li>
-          <div
-            className="Box-root Flex-root RadioButton-root Flex-flex Flex-alignCenter"
-          >
-            <input
-              checked={true}
-              className="RadioButton-input"
-              disabled={false}
-              id="reportComment-popover--reason-COMMENT_REPORTED_OFFENSIVE"
-              name="reason"
-              onBlur={[Function]}
-              onChange={[Function]}
-              onFocus={[Function]}
-              type="radio"
-              value="COMMENT_REPORTED_OFFENSIVE"
-            />
-            <label
-              className="RadioButton-label RadioButton-labelChecked"
-              htmlFor="reportComment-popover--reason-COMMENT_REPORTED_OFFENSIVE"
-            >
-              This comment is offensive
-            </label>
-          </div>
-        </li>
-        <li>
-          <div
-            className="Box-root Flex-root RadioButton-root Flex-flex Flex-alignCenter"
-          >
-            <input
-              checked={false}
-              className="RadioButton-input"
-              disabled={false}
-              id="reportComment-popover--reason-COMMENT_REPORTED_ABUSIVE"
-              name="reason"
-              onBlur={[Function]}
-              onChange={[Function]}
-              onFocus={[Function]}
-              type="radio"
-              value="COMMENT_REPORTED_ABUSIVE"
-            />
-            <label
-              className="RadioButton-label"
-              htmlFor="reportComment-popover--reason-COMMENT_REPORTED_ABUSIVE"
-            >
-              This commenter is being abusive
-            </label>
-          </div>
-        </li>
-        <li>
-          <div
-            className="Box-root Flex-root RadioButton-root Flex-flex Flex-alignCenter"
-          >
-            <input
-              checked={false}
-              className="RadioButton-input"
-              disabled={false}
-              id="reportComment-popover--reason-DISAGREE"
-              name="reason"
-              onBlur={[Function]}
-              onChange={[Function]}
-              onFocus={[Function]}
-              type="radio"
-              value="DISAGREE"
-            />
-            <label
-              className="RadioButton-label"
-              htmlFor="reportComment-popover--reason-DISAGREE"
-            >
-              I disagree with this comment
-            </label>
-          </div>
-        </li>
         <li>
           <div
             className="Box-root Flex-root RadioButton-root Flex-flex Flex-alignCenter"
@@ -341,7 +312,55 @@ exports[`render popup expanded 1`] = `
               className="RadioButton-label"
               htmlFor="reportComment-popover--reason-COMMENT_REPORTED_SPAM"
             >
-              This looks like an ad or marketing
+              Advertising or spam
+            </label>
+          </div>
+        </li>
+        <li>
+          <div
+            className="Box-root Flex-root RadioButton-root Flex-flex Flex-alignCenter"
+          >
+            <input
+              checked={true}
+              className="RadioButton-input"
+              disabled={false}
+              id="reportComment-popover--reason-COMMENT_REPORTED_OFFENSIVE"
+              name="reason"
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              type="radio"
+              value="COMMENT_REPORTED_OFFENSIVE"
+            />
+            <label
+              className="RadioButton-label RadioButton-labelChecked"
+              htmlFor="reportComment-popover--reason-COMMENT_REPORTED_OFFENSIVE"
+            >
+              Personal attacks or vulgarisms
+            </label>
+          </div>
+        </li>
+        <li>
+          <div
+            className="Box-root Flex-root RadioButton-root Flex-flex Flex-alignCenter"
+          >
+            <input
+              checked={false}
+              className="RadioButton-input"
+              disabled={false}
+              id="reportComment-popover--reason-COMMENT_REPORTED_COPYRIGHT"
+              name="reason"
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              type="radio"
+              value="COMMENT_REPORTED_COPYRIGHT"
+            />
+            <label
+              className="RadioButton-label"
+              htmlFor="reportComment-popover--reason-COMMENT_REPORTED_COPYRIGHT"
+            >
+              Copyright violation
             </label>
           </div>
         </li>
@@ -370,16 +389,52 @@ exports[`render popup expanded 1`] = `
           </div>
         </li>
       </ul>
+      <div
+        className="ReportCommentForm-heading"
+      >
+        Name
+      </div>
+      <div>
+        <input
+          className="ReportCommentForm-input"
+          data-testid="report-comment-reporter-forename"
+          disabled={false}
+          name="reporterForename"
+          onBlur={[Function]}
+          onChange={[Function]}
+          onFocus={[Function]}
+          type="text"
+          value=""
+        />
+      </div>
+      <div
+        className="ReportCommentForm-heading"
+      >
+        E-mail
+      </div>
+      <div
+        className="ReportCommentForm-detail"
+      >
+        Needed to notify you about the decision.
+      </div>
+      <div>
+        <input
+          className="ReportCommentForm-input"
+          data-testid="report-comment-reporter-email"
+          disabled={false}
+          name="reporterEmail"
+          onBlur={[Function]}
+          onChange={[Function]}
+          onFocus={[Function]}
+          type="email"
+          value=""
+        />
+      </div>
       <label
         className="ReportCommentForm-heading"
         htmlFor="comments-reportCommentForm-additionalDetails--comment-0"
       >
-        Additional information 
-        <span
-          className="ReportCommentForm-detail"
-        >
-          Optional
-        </span>
+        Report text *
       </label>
       <div
         className="ReportCommentForm-detail"
@@ -403,13 +458,44 @@ exports[`render popup expanded 1`] = `
           />
           <div
             className="ReportCommentForm-textareaInfo"
-          >
-            <div>
-              Max. 500 Characters
-            </div>
-          </div>
+          />
         </div>
       </div>
+      <div
+        className="ReportCommentForm-gdpr"
+      >
+        <label
+          className="ReportCommentForm-gdprLabel"
+        >
+          <input
+            checked={false}
+            data-testid="report-comment-gdpr-consent"
+            disabled={false}
+            name="gdprConsent"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+            type="checkbox"
+            value=""
+          />
+          <span>
+            I have read the 
+            <a
+              href="https://www.cncenter.cz/zasady-ochrany-osobnich-udaju/informace-o-zpracovani-udaju-komunikace"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Information about processing personal data
+            </a>
+             *
+          </span>
+        </label>
+      </div>
+      <p
+        className="ReportCommentForm-goodFaith"
+      >
+        I declare that, to the best of my knowledge and in good faith, the information and allegations contained in this notice are accurate and complete.
+      </p>
       <div
         className="Box-root Flex-root Flex-flex Flex-justifyFlexEnd Flex-alignCenter"
       >
@@ -428,9 +514,9 @@ exports[`render popup expanded 1`] = `
           Cancel
         </button>
         <button
-          className="BaseButton-root Button-base Button-filled Button-fontSizeSmall Button-textAlignCenter Button-fontFamilyPrimary Button-fontWeightPrimaryBold Button-paddingSizeSmall Button-colorSecondary Button-upperCase coral coral-reportPopover-submitButton"
+          className="BaseButton-root Button-base Button-filled Button-fontSizeSmall Button-textAlignCenter Button-fontFamilyPrimary Button-fontWeightPrimaryBold Button-paddingSizeSmall Button-colorSecondary Button-disabled Button-upperCase coral coral-reportPopover-submitButton"
           data-variant="filled"
-          disabled={false}
+          disabled={true}
           onBlur={[Function]}
           onFocus={[Function]}
           onMouseOut={[Function]}

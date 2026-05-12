@@ -94,6 +94,12 @@ const ReasonText: FunctionComponent<ReasonTextProps> = ({ reason }) => {
       return (
         <Localized id="moderate-forReview-reportedBio">User bio</Localized>
       );
+    case "COMMENT_REPORTED_COPYRIGHT":
+      return (
+        <Localized id="moderate-forReview-reportedCopyright">
+          Copyright violation
+        </Localized>
+      );
     case "COMMENT_REPORTED_OFFENSIVE":
       return (
         <Localized id="moderate-forReview-reportedOffensive">
