@@ -1,3 +1,4 @@
+import config from "coral-server/config";
 import { MongoContext } from "coral-server/data/context";
 import {
   CommentNotFoundError,
@@ -40,6 +41,7 @@ import { GQLCOMMENT_FLAG_REPORTED_REASON } from "coral-server/graph/schema/__gen
 
 const REPORTER_NAME_MAX_LENGTH = 100;
 
+import { submitFlagReportToDSAGuard } from "../dsaGuard";
 import {
   publishCommentFlagCreated,
   publishCommentReactionCreated,
@@ -468,6 +470,23 @@ export async function createFlag(
       action.reason === GQLCOMMENT_FLAG_REPORTED_REASON.COMMENT_REPORTED_SPAM
     ) {
       await submitCommentAsSpam(mongo, tenant, comment, request);
+    }
+
+    const dsaGuardApiBase = config.get("dsa_guard_api_base");
+    const dsaGuardItemWebsite = config.get("dsa_guard_item_website");
+    if (dsaGuardApiBase && dsaGuardItemWebsite) {
+      void submitFlagReportToDSAGuard(
+        mongo,
+        tenant,
+        comment,
+        {
+          reason: input.reason,
+          additionalDetails: input.additionalDetails,
+          reporterName: input.reporterForename || undefined,
+          reporterEmail: input.reporterEmail || undefined,
+        },
+        { apiBase: dsaGuardApiBase, itemWebsite: dsaGuardItemWebsite }
+      );
     }
   }
 

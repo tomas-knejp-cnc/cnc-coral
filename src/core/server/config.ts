@@ -487,6 +487,18 @@ const config = convict({
     default: "Sign in",
     env: "SIGNIN_WINDOW_TITLE",
   },
+  dsa_guard_api_base: {
+    doc: "Base URL of CNC's DSA Guard API. When empty, the DSA Guard integration is disabled and comment reports are not forwarded.",
+    format: String,
+    default: "",
+    env: "DSA_GUARD_API_BASE",
+  },
+  dsa_guard_item_website: {
+    doc: 'Value to send as `itemWebsite` in DSA Guard report payloads, identifying this Coral instance to DSA Guard (e.g. "aha-labrador"). Required when DSA_GUARD_API_BASE is set.',
+    format: String,
+    default: "",
+    env: "DSA_GUARD_ITEM_WEBSITE",
+  },
 });
 
 export type Config = typeof config;
