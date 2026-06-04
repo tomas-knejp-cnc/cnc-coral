@@ -8939,11 +8939,12 @@ type Mutation {
   ): RemoveCommentDontAgreePayload @auth @rate(seconds: 3)
 
   """
-  createCommentFlag will create a Flag authored by the current logged in User on
-  a given Comment.
+  createCommentFlag will create a Flag on a given Comment. The Flag is authored
+  by the current logged in User if one is present, or recorded as an anonymous
+  (logged-out) report otherwise. Anonymous flags bypass the @rate directive's
+  per-user limit because the directive does not yet handle anonymous callers.
   """
   createCommentFlag(input: CreateCommentFlagInput!): CreateCommentFlagPayload!
-    @auth
     @rate(seconds: 3)
 
   """
