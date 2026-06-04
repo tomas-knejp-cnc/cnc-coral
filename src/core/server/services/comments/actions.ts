@@ -1,3 +1,5 @@
+import { v4 as uuid } from "uuid";
+
 import config from "coral-server/config";
 import { MongoContext } from "coral-server/data/context";
 import {
@@ -101,8 +103,11 @@ async function addCommentAction(
   redis: AugmentedRedis,
   broker: CoralEventPublisherBroker,
   tenant: Tenant,
-  input: Omit<CreateActionInput, "storyID" | "siteID" | "userID">,
-  author: User,
+  input: Omit<
+    CreateActionInput,
+    "storyID" | "siteID" | "userID" | "anonymousID"
+  >,
+  author: User | null,
   now = new Date()
 ): Promise<AddCommentAction> {
   const oldComment = await retrieveComment(
@@ -123,9 +128,10 @@ async function addCommentAction(
   const { storyID, siteID, section } = oldComment;
 
   // Check if the user is banned on this site, if they are, throw an error right
-  // now.
+  // now. Anonymous (logged-out) reporters skip this check since there is no
+  // account to be banned.
   // NOTE: this should be removed with attribute based auth checks.
-  if (isSiteBanned(author, siteID)) {
+  if (author && isSiteBanned(author, siteID)) {
     // Get the site in question.
     const site = await retrieveSite(mongo, tenant.id, siteID);
     if (!site) {
@@ -135,12 +141,15 @@ async function addCommentAction(
     throw new UserSiteBanned(author.id, site.id, site.name);
   }
 
-  // Create the action creator input.
+  // Create the action creator input. For anonymous flags, generate a unique
+  // anonymousID so the MongoDB upsert filter doesn't collapse multiple
+  // anonymous submissions on the same (comment, reason) into a single record.
   const action: CreateAction = {
     ...input,
     storyID,
     siteID,
-    userID: author.id,
+    userID: author?.id ?? null,
+    ...(author ? {} : { anonymousID: uuid() }),
     section,
   };
 
@@ -400,7 +409,7 @@ export async function createFlag(
   redis: AugmentedRedis,
   broker: CoralEventPublisherBroker,
   tenant: Tenant,
-  author: User,
+  author: User | null,
   input: CreateCommentFlag,
   now = new Date(),
   request?: Request | undefined

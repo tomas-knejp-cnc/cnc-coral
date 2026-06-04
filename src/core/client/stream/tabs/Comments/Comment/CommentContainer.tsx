@@ -733,7 +733,6 @@ export const CommentContainer: FunctionComponent<Props> = ({
                       <ReportButton
                         onClick={toggleShowReportFlow}
                         open={showReportFlow}
-                        viewer={viewer}
                         comment={comment}
                       />
                     )}
@@ -752,7 +751,6 @@ export const CommentContainer: FunctionComponent<Props> = ({
         />
         {showReportFlow && !story.isArchived && !story.isArchiving && (
           <ReportFlowContainer
-            viewer={viewer}
             comment={comment}
             settings={settings}
             onClose={toggleShowReportFlow}
@@ -802,8 +800,6 @@ const enhanced = withShowAuthPopupMutation(
         }
         ...UsernameWithPopoverContainer_viewer
         ...ReactionButtonContainer_viewer
-        ...ReportFlowContainer_viewer
-        ...ReportButton_viewer
         ...CaretContainer_viewer
       }
     `,

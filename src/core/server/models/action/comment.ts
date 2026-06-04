@@ -121,9 +121,18 @@ export interface CommentAction extends TenantResource {
 
   /**
    * userID is the ID of the User that left this Action. In the event that the
-   * Action was left by Coral, it will be null.
+   * Action was left by Coral or by an anonymous (logged-out) reporter, it will
+   * be null.
    */
   userID: string | null;
+
+  /**
+   * anonymousID is set for anonymous (logged-out) flag actions only. A
+   * server-generated UUID per submission, used to make the action's filter
+   * unique so multiple anonymous flags on the same (comment, reason) don't
+   * collapse via the upsert dedup path.
+   */
+  anonymousID?: string;
 
   /**
    * createdAt is the date that this particular Action was created at.

@@ -1,20 +1,15 @@
 import { Localized } from "@fluent/react/compat";
 import cn from "classnames";
-import React, { FunctionComponent, useCallback } from "react";
+import React, { FunctionComponent } from "react";
 import { graphql } from "react-relay";
 import Responsive from "react-responsive";
 
-import { MutationProp, withFragmentContainer } from "coral-framework/lib/relay";
+import { withFragmentContainer } from "coral-framework/lib/relay";
 import CLASSES from "coral-stream/classes";
-import {
-  ShowAuthPopupMutation,
-  withShowAuthPopupMutation,
-} from "coral-stream/common/AuthPopup";
 import { Flex, Icon, MatchMedia } from "coral-ui/components/v2";
 import { Button } from "coral-ui/components/v3";
 
 import { ReportButton_comment } from "coral-stream/__generated__/ReportButton_comment.graphql";
-import { ReportButton_viewer } from "coral-stream/__generated__/ReportButton_viewer.graphql";
 
 import styles from "./ReportButton.css";
 
@@ -22,28 +17,14 @@ interface Props {
   onClick: () => void;
   open?: boolean | null;
 
-  showAuthPopup: MutationProp<typeof ShowAuthPopupMutation>;
   comment: ReportButton_comment;
-  viewer: ReportButton_viewer | null;
 }
 
-const ReportButton: FunctionComponent<Props> = ({
-  onClick,
-  showAuthPopup,
-  comment,
-  viewer,
-  open,
-}) => {
-  const isLoggedIn = !!viewer;
-
+const ReportButton: FunctionComponent<Props> = ({ onClick, comment, open }) => {
   const isReported =
     comment.viewerActionPresence &&
     (comment.viewerActionPresence.flag ||
       comment.viewerActionPresence.dontAgree);
-
-  const signIn = useCallback(() => {
-    void showAuthPopup({ view: "SIGN_IN" });
-  }, [showAuthPopup]);
 
   if (isReported) {
     return (
@@ -91,7 +72,7 @@ const ReportButton: FunctionComponent<Props> = ({
         fontSize="small"
         fontWeight="semiBold"
         paddingSize="extraSmall"
-        onClick={isLoggedIn ? onClick : signIn}
+        onClick={onClick}
         data-testid="comment-report-button"
       >
         <Flex alignItems="center" container="span">
@@ -109,26 +90,19 @@ const ReportButton: FunctionComponent<Props> = ({
   );
 };
 
-const enhanced = withShowAuthPopupMutation(
-  withFragmentContainer<Props>({
-    viewer: graphql`
-      fragment ReportButton_viewer on User {
-        id
+const enhanced = withFragmentContainer<Props>({
+  comment: graphql`
+    fragment ReportButton_comment on Comment {
+      id
+      author {
+        username
       }
-    `,
-    comment: graphql`
-      fragment ReportButton_comment on Comment {
-        id
-        author {
-          username
-        }
-        viewerActionPresence {
-          dontAgree
-          flag
-        }
+      viewerActionPresence {
+        dontAgree
+        flag
       }
-    `,
-  })(ReportButton)
-);
+    }
+  `,
+})(ReportButton);
 
 export default enhanced;

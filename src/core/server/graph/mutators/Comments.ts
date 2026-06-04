@@ -168,7 +168,7 @@ export const Comments = (ctx: GraphContext) => ({
       ctx.redis,
       ctx.broker,
       ctx.tenant,
-      ctx.user!,
+      ctx.user ?? null,
       {
         commentID,
         commentRevisionID,

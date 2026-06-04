@@ -998,6 +998,7 @@ moderate-flagDetails-spam = Spam
 moderate-flagDetails-bio = Bio
 moderate-flagDetails-copyright = Porušení autorských práv
 moderate-flagDetails-other = Jiné
+moderate-flagDetails-anonymousReporter = Anonymní hlášení
 
 moderate-flagDetails-toxicityScore = Skóre toxicity
 moderate-toxicityLabel-likely = Pravděpodobně <score></score>

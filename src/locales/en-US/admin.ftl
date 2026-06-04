@@ -998,6 +998,7 @@ moderate-flagDetails-spam = Spam
 moderate-flagDetails-bio = Bio
 moderate-flagDetails-copyright = Copyright violation
 moderate-flagDetails-other = Other
+moderate-flagDetails-anonymousReporter = Anonymous report
 
 moderate-flagDetails-toxicityScore = Toxicity Score
 moderate-toxicityLabel-likely = Likely <score></score>
