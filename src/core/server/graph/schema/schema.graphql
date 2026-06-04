@@ -6436,6 +6436,34 @@ type ApproveCommentPayload {
 # rejectComment
 ##################
 
+"""
+REJECT_COMMENT_DSA_REASON enumerates the four moderation reasons recognized by
+CNC's DSA Guard backend. When a Coral moderator rejects a comment that
+originated from a user report, the picked reason is forwarded to DSA Guard.
+"""
+enum REJECT_COMMENT_DSA_REASON {
+  """
+  Personal attacks, insults, vulgarisms, harming CNC. Maps to DSA Guard reason 1.
+  """
+  PERSONAL_ATTACKS
+
+  """
+  Spam or other advertising. Maps to DSA Guard reason 2.
+  """
+  SPAM
+
+  """
+  Off-topic, trolling, duplicates and other discussion-ruining behavior. Maps to
+  DSA Guard reason 3.
+  """
+  OFF_TOPIC
+
+  """
+  Other legal reasons. Maps to DSA Guard reason 1000.
+  """
+  OTHER
+}
+
 input RejectCommentInput {
   """
   commentID is the ID of the Comment that was rejected.
@@ -6446,6 +6474,21 @@ input RejectCommentInput {
   commentRevisionID is the ID of the CommentRevision that is being rejected.
   """
   commentRevisionID: ID!
+
+  """
+  dsaReason is the reason for rejecting the comment selected by the moderator
+  in the picker modal that opens for user-reported comments. Forwarded to DSA
+  Guard for compliance logging. Optional because Coral may reject comments via
+  paths that don't surface the picker; in that case the server defaults to
+  reason OTHER when forwarding.
+  """
+  dsaReason: REJECT_COMMENT_DSA_REASON
+
+  """
+  dsaReasonDetail is the free-form explanation written by the moderator in the
+  picker modal. Forwarded to DSA Guard as `reasonDetail`.
+  """
+  dsaReasonDetail: String
 
   """
   clientMutationId is required for Relay support.

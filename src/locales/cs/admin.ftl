@@ -1000,6 +1000,16 @@ moderate-flagDetails-copyright = Porušení autorských práv
 moderate-flagDetails-other = Jiné
 moderate-flagDetails-anonymousReporter = Anonymní hlášení
 
+## Modální okno s důvodem zamítnutí komentáře
+moderate-rejectReasonModal-title = Důvod zamítnutí
+moderate-rejectReasonModal-reasonPersonalAttacks = Osobní útoky, urážky, vulgarismy, poškozování CNC
+moderate-rejectReasonModal-reasonSpam = Spam nebo jiná reklama
+moderate-rejectReasonModal-reasonOffTopic = Off-topic, trolling, duplicity a jiné ničení diskuze
+moderate-rejectReasonModal-reasonOther = Jiné zákonné důvody
+moderate-rejectReasonModal-detailLabel = Podrobnější popis (volitelné)
+moderate-rejectReasonModal-cancel = Zrušit
+moderate-rejectReasonModal-confirm = Zamítnout
+
 moderate-flagDetails-toxicityScore = Skóre toxicity
 moderate-toxicityLabel-likely = Pravděpodobně <score></score>
 moderate-toxicityLabel-unlikely = Nepravděpodobně <score></score>

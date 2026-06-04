@@ -1000,6 +1000,16 @@ moderate-flagDetails-copyright = Copyright violation
 moderate-flagDetails-other = Other
 moderate-flagDetails-anonymousReporter = Anonymous report
 
+## Reject reason modal
+moderate-rejectReasonModal-title = Reject reason
+moderate-rejectReasonModal-reasonPersonalAttacks = Personal attacks, insults, vulgarisms, harming CNC
+moderate-rejectReasonModal-reasonSpam = Spam or other advertising
+moderate-rejectReasonModal-reasonOffTopic = Off-topic, trolling, duplicates and other discussion-ruining
+moderate-rejectReasonModal-reasonOther = Other legal reasons
+moderate-rejectReasonModal-detailLabel = Detailed reason (optional)
+moderate-rejectReasonModal-cancel = Cancel
+moderate-rejectReasonModal-confirm = Reject
+
 moderate-flagDetails-toxicityScore = Toxicity Score
 moderate-toxicityLabel-likely = Likely <score></score>
 moderate-toxicityLabel-unlikely = Unlikely <score></score>

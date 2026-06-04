@@ -1,9 +1,15 @@
+import config from "coral-server/config";
 import { MongoContext } from "coral-server/data/context";
 import { CoralEventPublisherBroker } from "coral-server/events/publisher";
 import { getLatestRevision, hasTag } from "coral-server/models/comment";
 import { Tenant } from "coral-server/models/tenant";
+import { retrieveUser } from "coral-server/models/user";
 import { removeTag } from "coral-server/services/comments";
 import { moderate } from "coral-server/services/comments/moderation";
+import {
+  RejectCommentDSAReason,
+  submitRejectActionToDSAGuard,
+} from "coral-server/services/dsaGuard";
 import { AugmentedRedis } from "coral-server/services/redis";
 import { submitCommentAsSpam } from "coral-server/services/spam";
 import { Request } from "coral-server/types/express";
@@ -16,6 +22,11 @@ import {
 import { publishChanges } from "./helpers";
 import { updateTagCommentCounts } from "./helpers/updateAllCommentCounts";
 
+export interface RejectCommentDSAFields {
+  dsaReason?: RejectCommentDSAReason;
+  dsaReasonDetail?: string;
+}
+
 const rejectComment = async (
   mongo: MongoContext,
   redis: AugmentedRedis,
@@ -25,7 +36,8 @@ const rejectComment = async (
   commentRevisionID: string,
   moderatorID: string,
   now: Date,
-  request?: Request | undefined
+  request?: Request | undefined,
+  dsaFields: RejectCommentDSAFields = {}
 ) => {
   const updateAllCommentCountsArgs = {
     actionCounts: {},
@@ -55,6 +67,27 @@ const rejectComment = async (
       revision.actionCounts.COMMENT_DETECTED_SPAM > 0)
   ) {
     await submitCommentAsSpam(mongo, tenant, result.before, request);
+  }
+
+  // Fire-and-forget DSA Guard moderator-action log for user-reported comments.
+  // The wrapper short-circuits if the comment has no COMMENT_REPORTED_* flags.
+  const dsaGuardApiBase = config.get("dsa_guard_api_base");
+  const dsaGuardItemWebsite = config.get("dsa_guard_item_website");
+  if (dsaGuardApiBase && dsaGuardItemWebsite && result.after) {
+    const moderator = await retrieveUser(mongo, tenant.id, moderatorID);
+    if (moderator) {
+      void submitRejectActionToDSAGuard(
+        mongo,
+        tenant,
+        result.after,
+        moderator,
+        {
+          reason: dsaFields.dsaReason,
+          reasonDetail: dsaFields.dsaReasonDetail,
+        },
+        { apiBase: dsaGuardApiBase, itemWebsite: dsaGuardItemWebsite }
+      );
+    }
   }
 
   // If the comment hasn't been updated, skip the rest of the steps.

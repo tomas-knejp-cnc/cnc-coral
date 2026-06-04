@@ -74,6 +74,8 @@ const RejectCommentMutation = createMutation(
         input: {
           commentID: input.commentID,
           commentRevisionID: input.commentRevisionID,
+          dsaReason: input.dsaReason,
+          dsaReasonDetail: input.dsaReasonDetail,
           clientMutationId: (clientMutationId++).toString(),
         },
         storyID: input.storyID,

@@ -39,7 +39,12 @@ export const Actions = (ctx: GraphContext) => ({
       input.commentID,
       input.commentRevisionID,
       ctx.user!.id,
-      ctx.now
+      ctx.now,
+      undefined,
+      {
+        dsaReason: input.dsaReason ?? undefined,
+        dsaReasonDetail: input.dsaReasonDetail ?? undefined,
+      }
     );
   },
   reviewCommentFlag: async (input: GQLReviewCommentFlagInput) => {

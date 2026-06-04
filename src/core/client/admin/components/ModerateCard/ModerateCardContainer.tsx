@@ -8,6 +8,9 @@ import React, {
 import { graphql } from "react-relay";
 
 import BanModal from "coral-admin/components/BanModal";
+import RejectCommentReasonModal, {
+  DSARejectReason,
+} from "coral-admin/components/ModerateCard/RejectCommentReasonModal";
 import NotAvailable from "coral-admin/components/NotAvailable";
 import {
   ApproveCommentMutation,
@@ -107,6 +110,23 @@ const ModerateCardContainer: FunctionComponent<Props> = ({
   );
 
   const [showBanModal, setShowBanModal] = useState(false);
+  const [showRejectReasonModal, setShowRejectReasonModal] = useState(false);
+
+  const userReportedFlagCount = useMemo(() => {
+    const reasons = comment.revision?.actionCounts?.flag?.reasons;
+    if (!reasons) {
+      return 0;
+    }
+    return (
+      reasons.COMMENT_REPORTED_OFFENSIVE +
+      reasons.COMMENT_REPORTED_ABUSIVE +
+      reasons.COMMENT_REPORTED_SPAM +
+      reasons.COMMENT_REPORTED_BIO +
+      reasons.COMMENT_REPORTED_COPYRIGHT +
+      reasons.COMMENT_REPORTED_OTHER
+    );
+  }, [comment.revision]);
+  const isUserReported = userReportedFlagCount > 0;
   const handleApprove = useCallback(async () => {
     if (!comment.revision) {
       return;
@@ -139,6 +159,38 @@ const ModerateCardContainer: FunctionComponent<Props> = ({
     moderationQueueSort,
   ]);
 
+  const performReject = useCallback(
+    async (dsaReason?: DSARejectReason, dsaReasonDetail?: string) => {
+      if (!comment.revision) {
+        return;
+      }
+
+      const { storyID, siteID, section } = parseModerationOptions(match);
+
+      await rejectComment({
+        commentID: comment.id,
+        commentRevisionID: comment.revision.id,
+        storyID,
+        siteID,
+        section,
+        orderBy: moderationQueueSort,
+        dsaReason,
+        dsaReasonDetail,
+      });
+      if (loadNext) {
+        loadNext();
+      }
+    },
+    [
+      comment.id,
+      comment.revision,
+      loadNext,
+      match,
+      moderationQueueSort,
+      rejectComment,
+    ]
+  );
+
   const handleReject = useCallback(async () => {
     if (!comment.revision) {
       return;
@@ -148,28 +200,25 @@ const ModerateCardContainer: FunctionComponent<Props> = ({
       return;
     }
 
-    const { storyID, siteID, section } = parseModerationOptions(match);
-
-    await rejectComment({
-      commentID: comment.id,
-      commentRevisionID: comment.revision.id,
-      storyID,
-      siteID,
-      section,
-      orderBy: moderationQueueSort,
-    });
-    if (loadNext) {
-      loadNext();
+    if (isUserReported) {
+      setShowRejectReasonModal(true);
+      return;
     }
-  }, [
-    comment.revision,
-    comment.id,
-    readOnly,
-    match,
-    rejectComment,
-    loadNext,
-    moderationQueueSort,
-  ]);
+
+    await performReject();
+  }, [comment.revision, readOnly, isUserReported, performReject]);
+
+  const handleConfirmReject = useCallback(
+    async (dsaReason: DSARejectReason, dsaReasonDetail: string) => {
+      setShowRejectReasonModal(false);
+      await performReject(dsaReason, dsaReasonDetail);
+    },
+    [performReject]
+  );
+
+  const handleCancelReject = useCallback(() => {
+    setShowRejectReasonModal(false);
+  }, []);
 
   const handleFeature = useCallback(() => {
     if (!comment.revision) {
@@ -368,6 +417,11 @@ const ModerateCardContainer: FunctionComponent<Props> = ({
           isMultisite={settings.multisite}
         />
       )}
+      <RejectCommentReasonModal
+        open={showRejectReasonModal}
+        onCancel={handleCancelReject}
+        onConfirm={handleConfirmReject}
+      />
     </>
   );
 };
@@ -402,6 +456,12 @@ const enhanced = withFragmentContainer<Props>({
             reasons {
               COMMENT_DETECTED_BANNED_WORD
               COMMENT_DETECTED_SUSPECT_WORD
+              COMMENT_REPORTED_OFFENSIVE
+              COMMENT_REPORTED_ABUSIVE
+              COMMENT_REPORTED_SPAM
+              COMMENT_REPORTED_BIO
+              COMMENT_REPORTED_COPYRIGHT
+              COMMENT_REPORTED_OTHER
             }
           }
         }
