@@ -1007,6 +1007,7 @@ moderate-rejectReasonModal-reasonSpam = Spam nebo jiná reklama
 moderate-rejectReasonModal-reasonOffTopic = Off-topic, trolling, duplicity a jiné ničení diskuze
 moderate-rejectReasonModal-reasonOther = Jiné zákonné důvody
 moderate-rejectReasonModal-detailLabel = Podrobnější popis (volitelné)
+moderate-rejectReasonModal-detailLabelRequired = Podrobnější popis (povinné pro „Jiné zákonné důvody")
 moderate-rejectReasonModal-cancel = Zrušit
 moderate-rejectReasonModal-confirm = Zamítnout
 

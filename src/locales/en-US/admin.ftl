@@ -1007,6 +1007,7 @@ moderate-rejectReasonModal-reasonSpam = Spam or other advertising
 moderate-rejectReasonModal-reasonOffTopic = Off-topic, trolling, duplicates and other discussion-ruining
 moderate-rejectReasonModal-reasonOther = Other legal reasons
 moderate-rejectReasonModal-detailLabel = Detailed reason (optional)
+moderate-rejectReasonModal-detailLabelRequired = Detailed reason (required for "Other legal reasons")
 moderate-rejectReasonModal-cancel = Cancel
 moderate-rejectReasonModal-confirm = Reject
 

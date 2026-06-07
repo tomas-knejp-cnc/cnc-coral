@@ -108,11 +108,19 @@ const RejectCommentReasonModal: FunctionComponent<Props> = ({
               </RadioButton>
             </HorizontalGutter>
 
-            <Localized id="moderate-rejectReasonModal-detailLabel">
-              <label className={styles.heading}>
-                Detailed reason (optional)
-              </label>
-            </Localized>
+            {reason === "OTHER" ? (
+              <Localized id="moderate-rejectReasonModal-detailLabelRequired">
+                <label className={styles.heading}>
+                  Detailed reason (required)
+                </label>
+              </Localized>
+            ) : (
+              <Localized id="moderate-rejectReasonModal-detailLabel">
+                <label className={styles.heading}>
+                  Detailed reason (optional)
+                </label>
+              </Localized>
+            )}
             <Textarea
               value={reasonDetail}
               onChange={(e) => setReasonDetail(e.target.value)}
@@ -129,7 +137,10 @@ const RejectCommentReasonModal: FunctionComponent<Props> = ({
                 <Button
                   color="alert"
                   onClick={handleConfirm}
-                  disabled={!reason}
+                  disabled={
+                    !reason ||
+                    (reason === "OTHER" && reasonDetail.trim().length === 0)
+                  }
                 >
                   Reject
                 </Button>

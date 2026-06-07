@@ -24,7 +24,6 @@ import { ModerationActionsContainer_viewer } from "coral-stream/__generated__/Mo
 import ApproveCommentMutation from "./ApproveCommentMutation";
 import FeatureCommentMutation from "./FeatureCommentMutation";
 import ModerationActionBanQuery from "./ModerationActionBanQuery";
-import RejectCommentMutation from "./RejectCommentMutation";
 import UnfeatureCommentMutation from "./UnfeatureCommentMutation";
 
 import styles from "./ModerationActionsContainer.css";
@@ -37,6 +36,7 @@ interface Props {
   onDismiss: () => void;
   onBan: () => void;
   onSiteBan: () => void;
+  onReject: () => void;
 }
 
 const ModerationActionsContainer: FunctionComponent<Props> = ({
@@ -47,6 +47,7 @@ const ModerationActionsContainer: FunctionComponent<Props> = ({
   onDismiss,
   onBan,
   onSiteBan,
+  onReject,
 }) => {
   const [{ accessToken }] = useLocal<ModerationActionsContainer_local>(graphql`
     fragment ModerationActionsContainer_local on Local {
@@ -58,7 +59,6 @@ const ModerationActionsContainer: FunctionComponent<Props> = ({
   const approve = useMutation(ApproveCommentMutation);
   const feature = useMutation(FeatureCommentMutation);
   const unfeature = useMutation(UnfeatureCommentMutation);
-  const reject = useMutation(RejectCommentMutation);
 
   const linkModerateStory = useModerationLink({ storyID: story.id });
   const linkModerateComment = useModerationLink({ commentID: comment.id });
@@ -100,16 +100,6 @@ const ModerationActionsContainer: FunctionComponent<Props> = ({
       commentRevisionID: comment.revision.id,
     });
   }, [approve, comment]);
-  const onReject = useCallback(async () => {
-    if (!comment.revision) {
-      return;
-    }
-    await reject({
-      commentID: comment.id,
-      commentRevisionID: comment.revision.id,
-      storyID: story.id,
-    });
-  }, [approve, comment, story]);
   const onFeature = useCallback(() => {
     if (!comment.revision) {
       return;

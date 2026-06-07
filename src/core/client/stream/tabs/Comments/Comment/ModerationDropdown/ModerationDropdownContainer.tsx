@@ -29,6 +29,7 @@ interface Props {
   settings: ModerationDropdownContainer_settings;
   onDismiss: () => void;
   scheduleUpdate: () => void;
+  onReject: () => void;
 }
 
 const ModerationDropdownContainer: FunctionComponent<Props> = ({
@@ -38,6 +39,7 @@ const ModerationDropdownContainer: FunctionComponent<Props> = ({
   settings,
   onDismiss,
   scheduleUpdate,
+  onReject,
 }) => {
   const emitShowEvent = useViewerEvent(ShowModerationPopoverEvent);
   const [view, setView] = useState<View>("MODERATE");
@@ -67,6 +69,7 @@ const ModerationDropdownContainer: FunctionComponent<Props> = ({
             onDismiss={onDismiss}
             onBan={onBan}
             onSiteBan={onSiteBan}
+            onReject={onReject}
           />
         </Dropdown>
       ) : (

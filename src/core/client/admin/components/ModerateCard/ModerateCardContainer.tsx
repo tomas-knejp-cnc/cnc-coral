@@ -8,15 +8,15 @@ import React, {
 import { graphql } from "react-relay";
 
 import BanModal from "coral-admin/components/BanModal";
-import RejectCommentReasonModal, {
-  DSARejectReason,
-} from "coral-admin/components/ModerateCard/RejectCommentReasonModal";
 import NotAvailable from "coral-admin/components/NotAvailable";
 import {
   ApproveCommentMutation,
   RejectCommentMutation,
 } from "coral-admin/mutations";
 import FadeInTransition from "coral-framework/components/FadeInTransition";
+import RejectCommentReasonModal, {
+  DSARejectReason,
+} from "coral-framework/components/RejectCommentReasonModal";
 import { getModerationLink } from "coral-framework/helpers";
 import parseModerationOptions from "coral-framework/helpers/parseModerationOptions";
 import {
